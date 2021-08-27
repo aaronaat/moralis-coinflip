@@ -14,7 +14,8 @@ async function login() {
 }
 
 async function flip(side){
-    alert(side);
+    let amount = document.getElementById("amount").value;
+    alert(`${side} ${amount}`);
 }
 
 
