@@ -8,6 +8,11 @@ async function login() {
         alert("Logged in")
         document.getElementById("login_button").style.display = "none";
         document.getElementById("game").style.display = "block";
+
+
+        let results = await Moralis.Cloud.run('test',{});
+        console.log(results);
+        
     } catch (error) {
         console.log(error);
     }
@@ -18,11 +23,12 @@ async function flip(side){
     alert(`${side} ${amount}`);
     window.web3 = await Moralis.Web3.enable();
     let contractInstance = new web3.eth.Contract(window.abi, "0x715754fc34724FEfd233611599EAE91e00a51245")
-    contractInstance.methods.flip(side == "heads" ? 0 : 1).send({value: amount, from: ethereum.selectedAddress})
-    .on('receipt',function(receipt){
-        console.log(receipt);
-        receipt.events.bet.returnValues.win ? (alert('you win')) : (alert('you lose'));
-    })
+    contractInstance.methods.flip(side == "heads" ? 0 : 1)
+        .send({value: amount, from: ethereum.selectedAddress})
+        .on('receipt',function(receipt){
+            console.log(receipt);
+            receipt.events.bet.returnValues.win ? (alert('you win')) : (alert('you lose'));
+        })
 }
 
 
